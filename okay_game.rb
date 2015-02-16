@@ -1,5 +1,12 @@
+#Copyright (C) 2015 crayonsmelting - protected under Australian and International Copyright law 
+#crayonsmelting can be found at http://www.github.com/crayonsmelting/ or at crayons.melting@gmail.com 
+#Licence found within licence.txt 
+############################################
+
+
 #introduction to a great adventure
 puts "
+This okay game is COPYRIGHT (C) 2015 crayonsmelting. See licence.txt. 
 Hey guy! Welcome to your new adventure."
 
 gold_room = false
