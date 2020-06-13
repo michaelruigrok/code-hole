@@ -153,15 +153,19 @@ void square(char** grid, int centerX, int centerY, int radius) {
 int main(int argc, char** argv) {
 
 	int radius;
-	if (argc > 0) {
+
+	if (argc > 1) {
 		radius = atoi(argv[1]);
-		if (radius < 1 || radius > 24) radius = 9;
+		if (radius < 1 || radius > 200) radius = 9;
 	} else {
-		radius = 9;
+		printf("Usage: ./draw_circle radius\n");
+		printf("example:\n\n");
+
+		radius = 10;
 	}
 
-	const int squareHeight = 50;
-	const int squareWidth = 50;
+	const int squareHeight = radius * 2 + 5;
+	const int squareWidth = radius * 2 + 5;
 	
 	char** grid = malloc(squareHeight * sizeof(char*));
 	for (int i = 0; i < squareHeight; i++) {
@@ -171,9 +175,10 @@ int main(int argc, char** argv) {
 		}
 	}
 
-	square(grid, 25, 25, radius);
+	square(grid, squareWidth/2, squareHeight/2, radius);
 	for (int i = 0; i < squareHeight; i++) {
 		for (int j = 0; j < squareWidth; j++) {
+			// This is where I actually put two characters down for every square
 			putchar(grid[i][j]);
 			putchar(grid[i][j]);
 		}
