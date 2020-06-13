@@ -4,24 +4,7 @@
 #include <string.h>
 #include <math.h>
 
-/*
-void curve(char** grid) {
-	int cursorX = vector + centerX;
-	int cursorY = vector + centerY;
-	int drawNum = 2;
-	while (cursorY != centerY) {
-		for (int x = 0; x < 2; x++) {
-			cursorX++;
-			for (int i = 0; i < drawNum; i++) {
-				if (cursorY == centerY) break;
-				cursorY--;
-				grid[cursorY][cursorX] = ' ';
-			}
-		}
-		drawNum *= coeff;
-	}
-}
-*/
+
 
 void square(char** grid, int centerX, int centerY, int radius) {
 
@@ -58,92 +41,49 @@ void square(char** grid, int centerX, int centerY, int radius) {
 
 	float coeff = 3.14159265 / 2;
 
+	// This is really the only thing we're calculating. We are then
+	// transforming this rise/run 8 times to form a circle:
+	//
+	// ###################
+	// ###################
+	// ##############   ##
+	// ###########    ####
+	// ######      #######
+	// #      ############
+	// ###################
+	// ###################
+	//
+	// The horizontal magnitude is dx
+	// The vertical magnitude is dy
+
+	int dx = 0, dy = 0;
 	int cursorX, cursorY, cursorX2, cursorY2;
-	cursorX = cursorX2 = vector + centerX;
-	cursorY = cursorY2 = vector + centerY;
+	dx = diagonal;
+	dy = diagonal;
 	int drawNum = 2;
-	while (cursorY != centerY) {
+
+	while (dy > 0) {
 		for (int x = 0; x < 2; x++) {
-		cursorX++;
+		dx++;
 		cursorY2++;
 		for (int i = 0; i < drawNum; i++) {
-			if (cursorY == centerY) break;
-			cursorY--;
+			if (dy == 0) break;
+			dy--;
 			cursorX2--;
-			grid[cursorY][cursorX] = ' ';
-			grid[cursorY2][cursorX2] = ' ';
-		}
-		}
-		drawNum *= coeff;
-	}
 
-	cursorX = cursorX2 = centerX + vector;
-	cursorY = cursorY2 = centerY - vector;
-	drawNum = 2;
-	while (cursorY != centerY) {
-		for (int x = 0; x < 2; x++) {
-		cursorX++;
-		cursorY2--;
-		for (int i = 0; i < drawNum; i++) {
-			if (cursorY == centerY) break;
-			cursorY++;
-			cursorX2--;
-			grid[cursorY][cursorX] = ' ';
-			grid[cursorY2][cursorX2] = ' ';
-		}
-		}
-		drawNum *= coeff;
-	}
-
-	cursorX = cursorX2 = centerX - vector;
-	cursorY = cursorY2 = centerY - vector;
-	drawNum = 2;
-	while (cursorY != centerY) {
-		for (int x = 0; x < 2; x++) {
-		cursorX--;
-		cursorY2--;
-		for (int i = 0; i < drawNum; i++) {
-			if (cursorY == centerY) break;
-			cursorY++;
-			cursorX2++;
-			grid[cursorY][cursorX] = ' ';
-			grid[cursorY2][cursorX2] = ' ';
-		}
-		}
-		drawNum *= coeff;
-	}
-
-	cursorX = cursorX2 = centerX - vector;
-	cursorY = cursorY2 = centerY + vector;
-	drawNum = 2;
-	while (cursorY != centerY) {
-		for (int x = 0; x < 2; x++) {
-		cursorX--;
-		cursorY2++;
-		for (int i = 0; i < drawNum; i++) {
-			if (cursorY == centerY) break;
-			cursorY--;
-			cursorX2++;
-			grid[cursorY][cursorX] = ' ';
-			grid[cursorY2][cursorX2] = ' ';
-		}
-		}
-		drawNum *= coeff;
-	}
-
-	cursorX = cursorX2 = vector + centerX;
-	cursorY = cursorY2 = vector + centerY;
-	drawNum = 2;
-	while (cursorY != centerY) {
-		for (int x = 0; x < 2; x++) {
-		cursorX++;
-		cursorY2++;
-		for (int i = 0; i < drawNum; i++) {
-			if (cursorY == centerY) break;
-			cursorY--;
-			cursorX2--;
-			grid[cursorY][cursorX] = ' ';
-			grid[cursorY2][cursorX2] = ' ';
+			// Now plot on grid
+			// Bottom right quadrant
+			grid[centerY + dy][centerX + dx] = ' ';
+			grid[centerY + dx][centerX + dy] = ' ';
+			// Bottom left quadrant
+			grid[centerY + dy][centerX - dx] = ' ';
+			grid[centerY + dx][centerX - dy] = ' ';
+			// Top right quadrant
+			grid[centerY - dy][centerX + dx] = ' ';
+			grid[centerY - dx][centerX + dy] = ' ';
+			// Top left quadrant
+			grid[centerY - dy][centerX - dx] = ' ';
+			grid[centerY - dx][centerX - dy] = ' ';
 		}
 		}
 		drawNum *= coeff;
